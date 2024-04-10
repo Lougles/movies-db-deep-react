@@ -7,7 +7,7 @@ function MovieCard (movie: IMovie) {
             <img className={styles.thumbnail} src="/movie-thumb.png" alt="Movie thumbnail"/>
             <div className={styles.content}>
                 <div>
-                    <Link to={`movies/${movie.id}`}>{movie.title}</Link>
+                    <Link to={`${movie.id}`}>{movie.title}</Link>
                 </div>
                 <div className={styles.popularity}>{movie.overview}</div>
                 <div className={styles.overview}>{movie.popularity}</div>

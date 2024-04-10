@@ -12,6 +12,9 @@
   a {
     color: shared.$primary-color;
   }
+  @media (max-width: shared.$max-tablet-width){
+    margin: 1rem;
+  }
   @media (max-width: shared.$max-mobile-width){
     margin: 0.5rem;
   }

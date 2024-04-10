@@ -13,6 +13,7 @@ function Movies ({movies}: MoviesProps) {
             <div className={styles.list}>
                 {movies.map((el: IMovie) => (
                     <MovieCard
+                    key={el.id}
                     {...el}
                     />
                 ))}
