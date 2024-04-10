@@ -1,24 +1,26 @@
 import {Movie} from "../../reducers/movies";
 import {connect} from "react-redux";
 import {RootState} from "../../store";
+import MovieCard from "./MovieCard";
+import './Movies.css'
 
 interface MoviesProps {
     movies: Movie[],
 }
 function Movies ({movies}: MoviesProps) {
     return(
-        <div>
-            <h1>Movies comming soon...</h1>
-            <ul>
+        <section>
+            <div className="Movies-list">
                 {movies.map((el: Movie) => (
-                    <li key={el.id}>
-                        <div>{el.title}</div>
-                        <div>{el.popular}</div>
-                        <div>{el.overview}</div>
-                    </li>
+                    <MovieCard
+                    key={el.id}
+                    id={el.id}
+                    title={el.title}
+                    overview={el.overview}
+                    popularity={el.popular} />
                 ))}
-            </ul>
-        </div>
+            </div>
+        </section>
     )
 }
 const mapStateToProps = (state: RootState) => ({
