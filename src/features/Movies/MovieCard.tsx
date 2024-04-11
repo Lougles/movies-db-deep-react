@@ -1,19 +1,17 @@
 import {Link} from "react-router-dom";
-import './Movies.css'
-
-interface MovieCardProps {
-    id: number;
-    title: string;
-    overview: string;
-    popularity: number;
-}
-
-function MovieCard ({id, title, overview, popularity}: MovieCardProps) {
+import styles from './MoviesCard.module.scss'
+import {IMovie} from "../../reducers/listOfMovie";
+function MovieCard (movie: IMovie) {
     return (
-        <div className="Movies-card">
-            <Link to={`movies/${id}`}>{title}</Link>
-            <div className="Movies-card-popularity">{popularity}</div>
-            <div className="Movies-card-overview">{overview}</div>
+        <div className={styles.card}>
+            <img className={styles.thumbnail} src="/movie-thumb.png" alt="Movie thumbnail"/>
+            <div className={styles.content}>
+                <div>
+                    <Link to={`${movie.id}`}>{movie.title}</Link>
+                </div>
+                <div className={styles.popularity}>{movie.overview}</div>
+                <div className={styles.overview}>{movie.popularity}</div>
+            </div>
         </div>
     )
 }

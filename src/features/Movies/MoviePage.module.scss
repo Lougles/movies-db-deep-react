@@ -1,0 +1,45 @@
+@use '../../styles/shared';
+
+.container {
+  width: 1024px;
+  margin: 0 auto;
+
+  .movie_Infotable {
+    margin: 20px 0 10px;
+    display: flex;
+
+    .movie_Infotable_left {
+      width: 200px;
+
+      img {
+        width: 200px;
+        height: auto;
+      }
+    }
+    .movie_Infotable_right {
+      tr {
+        text-align: left;
+      }
+    }
+  }
+}
+
+@media (max-width: shared.$max-tablet-width) {
+  .container {
+    width: 768px;
+    margin: 0 auto;
+    img {
+      width: 250px;
+    }
+  }
+}
+
+@media (max-width: shared.$max-mobile-width) {
+  .container {
+    width: 200px;
+    margin: 0 auto;
+    img {
+      width: 180px;
+    }
+  }
+}
