@@ -5,10 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {About} from "./features/About/About";
-import Movies from "./features/Movies/Movies";
 import {Provider} from "react-redux";
 import store from "./store";
 import {MoviesPage} from "./features/Movies/MoviesPage";
+import 'semantic-ui-css/semantic.min.css'
+import {MovieFetch} from "./features/Movies/Movies";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/movies",
-                element: <Movies />
+                element: <MovieFetch />
             },
             {
                 path: "/movies/:id",
@@ -40,7 +41,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
