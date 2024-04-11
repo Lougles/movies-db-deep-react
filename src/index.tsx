@@ -9,7 +9,7 @@ import {Provider} from "react-redux";
 import store from "./store";
 import {MoviesPage} from "./features/Movies/MoviesPage";
 import 'semantic-ui-css/semantic.min.css'
-import {MovieFetch} from "./features/Movies/Movies";
+import Movies from "./features/Movies/Movies";
 
 const router = createBrowserRouter([
     {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/movies",
-                element: <MovieFetch />
+                element: <Movies />
             },
             {
                 path: "/movies/:id",
