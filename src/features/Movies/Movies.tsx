@@ -3,30 +3,18 @@ import {RootState} from "../../store";
 import MovieCard from "./MovieCard";
 import styles from './Movies.module.scss'
 import {useEffect} from "react";
-import {client} from '../../api/tmdb';
-import {connect, useDispatch} from "react-redux";
-import {moviesLoaded, moviesLoading} from "../../reducers/movies";
+import {connect} from "react-redux";
+import {fetchMovies} from "../../reducers/movies";
+import {useAppDispatch} from "../../redux/hooks";
 interface MoviesProps {
     movies: IMovie[],
     loading: boolean
 }
 function Movies ({movies, loading}: MoviesProps) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        (async () => {
-            dispatch(moviesLoading());
-
-            const config = await client.getConfiguration();
-            const imageUrl = config.images.base_url;
-            const results = await client.getNowPlaying();
-
-            const mappedResults: IMovie[] = results.map((el: IMovie) => ({
-                ...el,
-                image: el.backdrop_path ? `${imageUrl}w780${el.backdrop_path}` : undefined,
-            }));
-            dispatch(moviesLoaded(mappedResults));
-        })()
+        dispatch(fetchMovies())
     }, [dispatch])
     return(
         <section>
