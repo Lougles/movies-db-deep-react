@@ -1,11 +1,11 @@
 import {IMovie} from "../../reducers/listOfMovie";
 import {RootState} from "../../store";
 import MovieCard from "./MovieCard";
-import styles from './Movies.module.scss'
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {fetchMovies} from "../../reducers/movies";
 import {useAppDispatch} from "../../redux/hooks";
+import {Container, Grid, LinearProgress, Typography} from "@mui/material";
 interface MoviesProps {
     movies: IMovie[],
     loading: boolean
@@ -17,17 +17,27 @@ function Movies ({movies, loading}: MoviesProps) {
         dispatch(fetchMovies())
     }, [dispatch])
     return(
-        <section>
-            <div className={styles.list}>
-                {loading ? <h3>Loading ...</h3> :
-                movies.map((el: IMovie) => (
-                    <MovieCard
-                    key={el.id}
-                    {...el}
-                    />
-                ))}
-            </div>
-        </section>
+        <Container sx={{py: 8}} maxWidth="lg">
+            <Typography variant="h4" align="center" gutterBottom>
+                Now playing
+            </Typography>
+                {loading ?
+                    <LinearProgress color="secondary" />
+                    :
+                    (
+                        <Grid container spacing={4}>
+                            {movies.map((el: IMovie) => (
+                            <Grid item key={el.id} xs={12} sm={6} md={4}>
+                                <MovieCard
+                                key={el.id}
+                                {...el}
+                                />
+                            </Grid>
+                            ))}
+                        </Grid>
+                    )
+                }
+        </Container>
     )
 }
 
