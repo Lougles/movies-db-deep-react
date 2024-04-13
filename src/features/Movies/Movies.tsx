@@ -1,49 +1,49 @@
 import {IMovie} from "../../reducers/listOfMovie";
-import {connect} from "react-redux";
 import {RootState} from "../../store";
 import MovieCard from "./MovieCard";
-import styles from './Movies.module.scss'
-import {useEffect, useState} from "react";
-import {client} from '../../api/tmdb'
-export function MovieFetch() {
-    const [movies, setMovies] = useState<IMovie[]>([]);
-    useEffect(() => {
-        (async () => {
-            const config = await client.getConfiguration();
-            const imageUrl = config.images.base_url;
-            const results = await client.getNowPlaying();
-
-            const mappedResults: IMovie[] = results.map((el: IMovie) => ({
-                ...el,
-                image: el.backdrop_path ? `${imageUrl}w780${el.backdrop_path}` : undefined,
-            }));
-            setMovies(mappedResults);
-        })()
-    }, [])
-    return <Movies movies={movies} />
-}
-
+import React, {useEffect} from "react";
+import {connect} from "react-redux";
+import {fetchMovies} from "../../reducers/movies";
+import {useAppDispatch} from "../../redux/hooks";
+import {Container, Grid, LinearProgress, Typography} from "@mui/material";
 interface MoviesProps {
     movies: IMovie[],
+    loading: boolean
 }
-function Movies ({movies}: MoviesProps) {
+function Movies ({movies, loading}: MoviesProps) {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchMovies())
+    }, [dispatch])
     return(
-        <section>
-            <div className={styles.list}>
-                {movies.map((el: IMovie) => (
-                    <MovieCard
-                    key={el.id}
-                    {...el}
-                    />
-                ))}
-            </div>
-        </section>
+        <Container sx={{py: 8}} maxWidth="lg">
+            <Typography variant="h4" align="center" gutterBottom>
+                Now playing
+            </Typography>
+                {loading ?
+                    <LinearProgress color="secondary" />
+                    :
+                    (
+                        <Grid container spacing={4}>
+                            {movies.map((el: IMovie) => (
+                            <Grid item key={el.id} xs={12} sm={6} md={4}>
+                                <MovieCard
+                                key={el.id}
+                                {...el}
+                                />
+                            </Grid>
+                            ))}
+                        </Grid>
+                    )
+                }
+        </Container>
     )
 }
+
 const mapStateToProps = (state: RootState) => ({
     movies: state.movies?.top,
+    loading: state.movies?.loading
 })
-
 const connector = connect(mapStateToProps);
-
 export default connector(Movies);

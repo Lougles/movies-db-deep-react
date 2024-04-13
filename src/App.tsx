@@ -1,28 +1,44 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import styles from './App.module.scss';
-import {Link, Outlet} from "react-router-dom";
+import {Link as RouterLink, Outlet} from "react-router-dom";
+import {AppBar, createTheme, CssBaseline, Link, ThemeProvider, Toolbar, Typography} from "@mui/material";
+import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
+import {teal} from "@mui/material/colors";
 
+
+function HeaderLink({children, to}: {to: string, children: ReactNode}) {
+    return <Link component={RouterLink} to={to} variant="button" color="inherit" sx={{ my: 1, mx: 1.5 }}> {children} </Link>
+}
+
+const defaultTheme = createTheme({
+    palette: {
+        primary: teal,
+        secondary: {
+            main: '#96000f'
+        }
+    }
+})
 function App() {
   return (
-    <div className={styles.root}>
-      <header className={styles.header}>
-        <img src="/cinema-ico.png" className={styles.logo} alt="logo" />
-        <ul>
-          <li>
-            <Link className={styles.link} to={"/"}> Home </Link>
-          </li>
-          <li>
-            <Link className={styles.link} to={"/about"}> About </Link>
-          </li>
-          <li>
-            <Link className={styles.link} to={"/movies"}> Movies </Link>
-          </li>
-        </ul>
-      </header>
-      <main className={styles.main}>
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <AppBar className={styles.header}>
+        <Toolbar>
+          <LiveTvOutlinedIcon sx={{mr: 2}} />
+            <Typography variant="h6" color="inherit" noWrap>
+                The Movies DB
+            </Typography>
+          <nav>
+            <HeaderLink to="/">Home</HeaderLink>
+            <HeaderLink to="/about">About</HeaderLink>
+            <HeaderLink to="/movies">Movies</HeaderLink>
+          </nav>
+        </Toolbar>
+      </AppBar>
+      <main style={{marginTop: '200px'}}>
         <Outlet />
       </main>
-    </div>
+    </ThemeProvider>
   );
 }
 
